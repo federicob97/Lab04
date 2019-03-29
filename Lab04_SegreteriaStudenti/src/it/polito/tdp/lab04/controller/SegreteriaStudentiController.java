@@ -59,20 +59,30 @@ public class SegreteriaStudentiController {
 
     @FXML
     void doCercaCorsi(ActionEvent event) {
-
+    	
     }
 
     @FXML
     void doCercaIscritti(ActionEvent event) {
-
+    	String corso = boxCorso.getValue();
+    	String iscritti = model.getIscritti(corso);
+    	txtArea.setText(iscritti);
     }
 
     @FXML
     void doCompleta(ActionEvent event) {
+    	txtCognome.clear();
+    	txtNome.clear();
     	int matricola = Integer.parseInt(txtMatricola.getText());
-    	String[] s = model.getStudente(matricola).split(" ");
-    	txtCognome.setText(s[0]);
-    	txtNome.setText(s[1]);
+    	String x = model.getStudente(matricola);
+    	if(x.contains(";")) {
+    		String[] s = x.split(";");
+    		txtCognome.setText(s[0]);
+    		txtNome.setText(s[1]);
+    	}
+    	else {
+    		txtArea.setText(x);
+    	}
     }
 
     @FXML
@@ -82,7 +92,9 @@ public class SegreteriaStudentiController {
 
     @FXML
     void doReset(ActionEvent event) {
-
+    	txtCognome.clear();
+    	txtNome.clear();
+    	txtArea.clear();
     }
 
     @FXML

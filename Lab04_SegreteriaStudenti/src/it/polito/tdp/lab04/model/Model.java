@@ -12,11 +12,12 @@ public class Model {
 	private List<Corso> corsi;
 	private List<Studente> studenti;
 	private StudenteDAO sdao;
+	private CorsoDAO cdao;
 	
 	public Model() {
-		CorsoDAO c = new CorsoDAO();
+		cdao = new CorsoDAO();
 		sdao = new StudenteDAO();
-		this.corsi = c.getTuttiICorsi();
+		this.corsi = cdao.getTuttiICorsi();
 		this.studenti = new LinkedList<Studente>();
 	}
 	
@@ -32,6 +33,14 @@ public class Model {
 	public String getStudente(int matricola) {
 		String s = sdao.getStudente(matricola);
 		return s;
+	}
+	public String getIscritti(String corso){
+		List<Studente> iscritti = new ArrayList<Studente>(cdao.getStudentiIscrittiAlCorso(corso));
+		String i = new String();
+		for(Studente x : iscritti) {
+			i+=x.getMatricola()+" "+x.getCognome()+" "+x.getNome()+" "+x.getCds()+"\n";
+		}
+		return i;
 	}
 	
 }

@@ -10,33 +10,28 @@ public class StudenteDAO {
 
 	
 	public String getStudente(int matricola) {
-		final String sql = "SELECT cognome,nome FROM studente WHERE matricola = ?";
-		String s = null;
-		Connection conn = ConnectDB.getConnection();
-		
+		String sql = "SELECT cognome,nome FROM studente WHERE matricola = ?";
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement st;
+		String s = new String();
 		try {
-			
-			PreparedStatement st = conn.prepareStatement(sql);
+			st = con.prepareStatement(sql);
 			st.setInt(1, matricola);
-
 			ResultSet rs = st.executeQuery();
-			
 			if(rs.next()) {
 				String cognome = rs.getString("cognome");
 				String nome = rs.getString("nome");
-				s = cognome+" "+nome;
-			}
-			else
-				s="";
+				s=cognome+";"+nome;
+			}else
+				s="Nessuna corrispondenza";
+			//con.close();
 			
-			conn.close();
-			return s;
-			
-
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			//e.printStackTrace();
 			throw new RuntimeException("Errore Db");
 		}
 		
+		return s;
 	}
 }
