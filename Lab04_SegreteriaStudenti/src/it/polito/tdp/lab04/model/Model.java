@@ -54,5 +54,12 @@ public class Model {
 			return x;
 		}
 	}
+	public boolean isIscritto(int matricola, String nomeCorso) {
+		String corsi = this.getCorsiFrequentati(matricola);
+		if(corsi.contains(nomeCorso))
+			return true;
+		else
+			return false;
+	}
 	
 }

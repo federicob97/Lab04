@@ -59,9 +59,21 @@ public class SegreteriaStudentiController {
 
     @FXML
     void doCercaCorsi(ActionEvent event) {
+    	String ilCorso= new String();
+    	if(boxCorso.getValue()!=null)
+    		ilCorso = boxCorso.getValue();
+    	else
+    		ilCorso = boxCorso.getPromptText();
     	int matricola = Integer.parseInt(txtMatricola.getText());
     	String corsi = model.getCorsiFrequentati(matricola);
-    	txtArea.setText(corsi);
+    	if(ilCorso.compareTo(boxCorso.getPromptText())==0 || ilCorso.compareTo("")==0) {
+    		txtArea.setText(corsi);
+    	}
+    	else if(model.isIscritto(matricola, ilCorso))
+    		txtArea.setText("Regolarmente iscritto al corso "+ilCorso);
+    	else
+    		txtArea.setText("Lo Studente non è presente nel corso");
+    	
     }
 
     @FXML
