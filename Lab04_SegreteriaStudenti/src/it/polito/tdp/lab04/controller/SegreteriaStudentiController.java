@@ -59,7 +59,9 @@ public class SegreteriaStudentiController {
 
     @FXML
     void doCercaCorsi(ActionEvent event) {
-    	
+    	int matricola = Integer.parseInt(txtMatricola.getText());
+    	String corsi = model.getCorsiFrequentati(matricola);
+    	txtArea.setText(corsi);
     }
 
     @FXML
@@ -92,6 +94,7 @@ public class SegreteriaStudentiController {
 
     @FXML
     void doReset(ActionEvent event) {
+    	txtMatricola.clear();
     	txtCognome.clear();
     	txtNome.clear();
     	txtArea.clear();

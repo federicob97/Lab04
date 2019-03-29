@@ -42,5 +42,17 @@ public class Model {
 		}
 		return i;
 	}
+	public String getCorsiFrequentati(int matricola) {
+		List<Corso> corsi = new ArrayList<Corso>(sdao.getCorsiFrequentati(matricola));
+		if(corsi.isEmpty())
+			return "Matricola errata";
+		else {
+			String x = new String();
+			for(Corso c : corsi) {
+				x+= c.getCodins()+" "+c.getCrediti()+" "+c.getNome()+" "+c.getPd()+"\n";
+			}
+			return x;
+		}
+	}
 	
 }

@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.*;
+
+import it.polito.tdp.lab04.model.Corso;
 
 
 public class StudenteDAO {
@@ -33,5 +36,37 @@ public class StudenteDAO {
 		}
 		
 		return s;
+	}
+	
+	public List<Corso> getCorsiFrequentati(int matricola){
+		String sql = "SELECT *\n" + 
+				"FROM corso\n" + 
+				"WHERE codins IN (SELECT codins\n" + 
+				"						FROM iscrizione\n" + 
+				"						WHERE matricola = ? )";
+		List<Corso> corsi = new ArrayList<Corso>();
+		Connection con = ConnectDB.getConnection();
+		try {
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setInt(1, matricola);
+			ResultSet rs = st.executeQuery();
+			while(rs.next()) {
+				String codins = rs.getString("codins");
+				String nome = rs.getString("nome");
+				int crediti = rs.getInt("crediti");
+				int pd = rs.getInt("pd");
+				Corso c = new Corso(codins,crediti,nome,pd);
+				corsi.add(c);
+			}
+			return corsi;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return corsi;
+		
+		
+		
+		
 	}
 }
